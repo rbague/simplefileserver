@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	dir := flag.String("dir", ".", "the directory of which to serve files")
-	port := flag.String("port", "8080", "on which port to listen to")
+	dir := flag.String("d", ".", "the directory of which to serve files")
+	port := flag.String("p", "8080", "on which port to listen to")
 	flag.Parse()
 
 	directory, err := filepath.Abs(*dir)
