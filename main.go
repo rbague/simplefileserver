@@ -1,16 +1,24 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
+
+	flag "github.com/spf13/pflag"
 )
 
 func main() {
-	dir := flag.String("d", ".", "the directory of which to serve files")
-	port := flag.String("p", "8080", "on which port to listen to")
+	help := flag.Bool("help", false, "prints this help")
+	dir := flag.StringP("directory", "d", ".", "the directory of which to serve files")
+	port := flag.StringP("port", "p", "8080", "on which port to listen to")
 	flag.Parse()
+
+	if *help {
+		flag.Usage()
+		os.Exit(0)
+	}
 
 	directory, err := filepath.Abs(*dir)
 	if err != nil {
