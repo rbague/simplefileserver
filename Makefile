@@ -1,11 +1,31 @@
-OUT=sfs
+.PHONY: all prepare build build-current clean format tidy setup
 
-run:
-	go run main.go
+NAME=sfs
+GO_FILES=$(shell go list -f '{{range .GoFiles}}{{.}} {{end}}' ./... | xargs)
 
-build: clean
-	GOOS=linux GOARCH=amd64 go build -o bin/$(OUT)-linux-amd64
-	GOOS=darwin GOARCH=amd64 go build -o bin/$(OUT)-darwin-amd64
+all: setup build
+
+prepare: format clean tidy
+
+build: prepare
+	gox --osarch "!darwin/386" --output "bin/$(NAME)-{{.OS}}-{{.Arch}}"
+
+build-current: prepare
+	go build -o $(NAME) $(GO_FILES)
 
 clean:
-	find bin ! -name '.gitkeep' -type f -exec rm {} +
+	@rm -f $(NAME)
+	@mkdir -p bin
+	@find bin -type f -exec rm {} +
+
+format:
+	gofmt -w $(GO_FILES)
+	goimports -w $(GO_FILES)
+	go vet ./...
+
+tidy:
+	@go mod tidy
+
+setup:
+	go mod download
+	@cat tools.go | grep _ | awk -F'"' '{print $$2}' | xargs -tI % go install %

@@ -42,6 +42,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Ignore binaries
-bin/*
-!bin/.gitkeep
+# Ignore binaries (build and build-current output files)
+bin/
+sfs
