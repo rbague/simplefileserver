@@ -12,6 +12,7 @@ import (
 func main() {
 	help := flag.Bool("help", false, "prints this help")
 	dir := flag.StringP("directory", "d", ".", "the directory of which to serve files")
+	path := flag.String("path", "/", "path to serve the files from")
 	host := flag.StringP("host", "h", "", "which host to bind the server to")
 	port := flag.StringP("port", "p", "8080", "on which port to listen to")
 	cert := flag.String("cert-file", "", "path to the SSL certificate")
@@ -25,7 +26,7 @@ func main() {
 
 	address := fmt.Sprintf("%s:%s", *host, *port)
 	mux := http.NewServeMux()
-	mux.Handle("/", http.FileServer(http.Dir(*dir)))
+	mux.Handle(*path, http.StripPrefix(*path, http.FileServer(http.Dir(*dir))))
 
 	var err error
 	if *cert != "" || *key != "" {

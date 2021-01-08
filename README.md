@@ -31,6 +31,7 @@ Name | Short | Required | Default | Description
 --- | :---: | :---: | :---: | ---
 help | - | false | - | Usage instructions
 directory | d | false | `.` | The directory where to serve the files from
+path | - | false | `/` | The URL path where files should be served from
 host | h | false | - | The host where to bind the server to
 port | p | false | `8080` | The port where the server should listen to
 cert-file | - | false *(`true` if key-file is present)* | - | SSL certificate file
