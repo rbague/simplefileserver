@@ -40,7 +40,7 @@ key-file | - | false *(`true` if cert-file is present)* | - | SSL certificate's 
 ## HTTPS
 In order to run the server with TLS activated, pass both the `cert-file` and `key-file` flags to the startup command.
 
-to enable it locally I recommend using the [mkcert](https://github.com/filosottile/mkcert) tool to gerate the files, or you can generate them with the following command
+To enable it locally, you can generate self-signed certificates using [mkcert](https://github.com/filosottile/mkcert) or with the following command
 ```sh
 openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365
 ```
