@@ -16,7 +16,7 @@ build-current: prepare
 clean:
 	@rm -f $(NAME)
 	@mkdir -p bin
-	@find bin -type f -exec rm {} +
+	@find bin ! -name '.gitkeep' -type f -exec rm {} +
 
 format:
 	gofmt -w $(GO_FILES)
@@ -26,6 +26,6 @@ format:
 tidy:
 	@go mod tidy
 
-setup:
+install:
 	go mod download
 	@cat tools.go | grep _ | awk -F'"' '{print $$2}' | xargs -tI % go install %
